@@ -25,7 +25,15 @@ export async function bootstrapStakeSession() {
   bootstrapPromise = (async () => {
     const session = get(sessionQuery);
     const isReplay = get(replayMode);
-    if (!session.sessionID || !session.rgsUrl) {
+    const hasReplayParams = Boolean(
+      session.rgsUrl &&
+      session.game &&
+      session.version &&
+      session.mode &&
+      session.event
+    );
+
+    if ((!session.sessionID || !session.rgsUrl) && !(isReplay && hasReplayParams)) {
       sessionBootstrap.set(buildBootstrapState({ localMode: true }));
       return null;
     }
@@ -42,13 +50,25 @@ export async function bootstrapStakeSession() {
     });
 
     try {
-      if (isReplay && session.event) {
+      if (isReplay && hasReplayParams) {
         const replay = await fetchReplayEvent(session);
         if (replay?.round?.state && canHydrateRoundState(replay.round.state)) {
           hydrateStakeRound({
             ...replay.round,
             active: false,
           });
+        } else {
+          sessionBootstrap.set({
+            status: "error",
+            authenticated: false,
+            localMode: false,
+            error: "Replay payload did not include a compatible round.state.",
+            round: replay?.round ?? null,
+            config: null,
+            balance: null,
+            resumeBlocked: false,
+          });
+          return replay;
         }
         sessionBootstrap.set({
           status: "replay-ready",

@@ -75,6 +75,30 @@ async function postJson(url, payload) {
   return body;
 }
 
+async function getJson(url) {
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  const text = await response.text();
+  let body = null;
+  try {
+    body = text ? JSON.parse(text) : null;
+  } catch {
+    body = { raw: text };
+  }
+
+  if (!response.ok) {
+    const message = body?.message || body?.error || `HTTP ${response.status}`;
+    throw new Error(message);
+  }
+
+  return body;
+}
+
 function emitWindowEvent(name, detail) {
   if (typeof window === "undefined" || typeof window.dispatchEvent !== "function") return;
   window.dispatchEvent(new CustomEvent(name, { detail }));
@@ -134,18 +158,26 @@ export async function fetchBalance(session) {
 }
 
 export async function fetchReplayEvent(session) {
-  const body = await postJson(
-    joinRgsUrl(session.rgsUrl, "/replay/event"),
-    {
-      sessionID: session.sessionID,
-      event: session.event,
-      game: session.game || undefined,
-      version: session.version || undefined,
-    },
+  const replayUrl = joinRgsUrl(
+    session.rgsUrl,
+    `/bet/replay/${encodeURIComponent(session.game)}/${encodeURIComponent(session.version)}/${encodeURIComponent(session.mode)}/${encodeURIComponent(session.event)}`,
   );
+  const body = await getJson(replayUrl);
+  const normalizedRound = body?.round
+    ? normalizeStakeRound(body.round)
+    : body?.state
+      ? normalizeStakeRound({
+          betID: body?.event ?? session.event,
+          active: false,
+          mode: session.mode,
+          event: String(body?.event ?? session.event ?? ""),
+          payoutMultiplier: body?.payoutMultiplier ?? null,
+          state: body.state,
+        })
+      : null;
   return {
     event: body?.event ?? null,
-    round: normalizeStakeRound(body?.round),
+    round: normalizedRound,
     raw: body,
   };
 }

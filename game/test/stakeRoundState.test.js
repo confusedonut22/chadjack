@@ -13,12 +13,16 @@ test("buildRoundStateSnapshot preserves blackjack resume-relevant fields", () =>
     dealerHand: [{ rank: "A", suit: "spades" }],
     hands: [{
       bet: 2_000_000,
+      baseBet: 2_000_000,
       sb: { pp: 500_000, t: 500_000 },
       cards: [{ rank: "9", suit: "clubs" }, { rank: "7", suit: "hearts" }],
       result: null,
+      message: "",
       payout: 0,
       done: false,
       doubled: false,
+      isSplit: true,
+      isAceSplit: true,
       sideBetResults: [],
     }],
     activeHand: 0,
@@ -39,12 +43,16 @@ test("buildRoundStateSnapshot preserves blackjack resume-relevant fields", () =>
     shoe: [],
     hands: [{
       bet: 2_000_000,
+      baseBet: 2_000_000,
       sideBets: { pp: 500_000, t: 500_000 },
       cards: [{ rank: "9", suit: "clubs" }, { rank: "7", suit: "hearts" }],
       result: null,
+      message: "",
       payout: 0,
       done: false,
       doubled: false,
+      isSplit: true,
+      isAceSplit: true,
       sideBetResults: [],
     }],
     pendingInsurance: {
@@ -72,5 +80,13 @@ test("canHydrateRoundState requires resumable blackjack fields", () => {
     allowedActions: [],
     dealerHand: [],
     hands: [],
+  }), false);
+  assert.equal(canHydrateRoundState({
+    schemaVersion: ROUND_STATE_SCHEMA_VERSION,
+    phase: "play",
+    allowedActions: [],
+    dealerHand: [],
+    hands: [{}],
+    shoe: [],
   }), false);
 });

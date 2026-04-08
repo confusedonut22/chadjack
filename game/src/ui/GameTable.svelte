@@ -112,6 +112,7 @@
   $: canDouble = (() => {
     if (!activeH || activeH.cards.length !== 2 || $balance < activeH.bet) return false;
     if (activeH.doubled) return false;
+    if (activeH.isSplit || activeH.isAceSplit) return false;
     const total = handValue(activeH.cards);
     const soft = isSoft(activeH.cards);
     if (soft) return false;

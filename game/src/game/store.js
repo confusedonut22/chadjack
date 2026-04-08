@@ -410,15 +410,18 @@ export function hydrateStakeRound(round) {
     sb: hand.sideBets ?? { pp: 0, t: 0 },
     result: hand.result ?? null,
     message:
-      hand.result === "win" ? "Win"
+      hand.message ??
+      (hand.result === "win" ? "Win"
       : hand.result === "blackjack" ? "Blackjack"
       : hand.result === "push" ? "Push"
       : hand.result === "lose" ? "Lose"
       : hand.result === "bust" ? "Bust"
-      : "",
+      : ""),
     payout: hand.payout ?? 0,
     done: hand.done === true,
     doubled: hand.doubled === true,
+    isSplit: hand.isSplit === true,
+    isAceSplit: hand.isAceSplit === true,
     sideBetResults: hand.sideBetResults ?? [],
   }));
 

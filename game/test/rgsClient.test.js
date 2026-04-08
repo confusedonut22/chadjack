@@ -176,10 +176,9 @@ test("endRound posts to the wallet end-round endpoint and normalizes balance", a
 
 test("fetchReplayEvent hits the replay endpoint and normalizes the round", async () => {
   let capturedUrl = "";
-  let capturedBody = null;
   globalThis.fetch = async (url, init) => {
     capturedUrl = url;
-    capturedBody = JSON.parse(init.body);
+    assert.equal(init.method, "GET");
     return {
       ok: true,
       status: 200,
@@ -203,22 +202,48 @@ test("fetchReplayEvent hits the replay endpoint and normalizes the round", async
   };
 
   const response = await fetchReplayEvent({
-    sessionID: "abc123",
     rgsUrl: "https://rgs.example.com",
     event: "15",
     game: "blackjack",
     version: "1",
+    mode: "BASE",
   });
 
-  assert.equal(capturedUrl, "https://rgs.example.com/replay/event");
-  assert.deepEqual(capturedBody, {
-    sessionID: "abc123",
-    event: "15",
-    game: "blackjack",
-    version: "1",
-  });
+  assert.equal(capturedUrl, "https://rgs.example.com/bet/replay/blackjack/1/BASE/15");
   assert.equal(response.round.betID, 15);
   assert.equal(response.round.active, false);
+});
+
+test("fetchReplayEvent normalizes official top-level replay payloads", async () => {
+  globalThis.fetch = async () => ({
+    ok: true,
+    status: 200,
+    async text() {
+      return JSON.stringify({
+        event: "77",
+        payoutMultiplier: 2.5,
+        state: {
+          phase: "RESULT",
+          dealerHand: [],
+          hands: [],
+          shoe: [],
+        },
+      });
+    },
+  });
+
+  const response = await fetchReplayEvent({
+    rgsUrl: "https://rgs.example.com",
+    event: "77",
+    game: "blackjack",
+    version: "1",
+    mode: "BASE",
+  });
+
+  assert.equal(response.round.betID, 77);
+  assert.equal(response.round.event, "77");
+  assert.equal(response.round.payoutMultiplier, 2.5);
+  assert.equal(response.round.state.phase, "RESULT");
 });
 
 test("joinRgsUrl preserves base paths and normalizes bare hosts", () => {

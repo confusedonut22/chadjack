@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { get } from "svelte/store";
 import {
   initSessionFromQuery,
+  launchWarnings,
   normalizeRgsUrl,
   parseQuery,
   readLaunchDefaults,
@@ -26,6 +27,11 @@ test("session query parser reads stake launch params", () => {
 test("replay mode is enabled from replay query params", () => {
   initSessionFromQuery("https://example.com/?sessionID=abc123&rgs_url=https%3A%2F%2Frgs.example.com&replay=true&mode=replay");
   assert.equal(get(replayMode), true);
+});
+
+test("replay launch does not warn about missing sessionID when replay params are present", () => {
+  initSessionFromQuery("https://example.com/?rgs_url=https%3A%2F%2Frgs.example.com&replay=true&game=blackjack&version=1&mode=BASE&event=42");
+  assert.deepEqual(get(launchWarnings), []);
 });
 
 test("plain local launch does not emit missing Stake param warnings", async () => {

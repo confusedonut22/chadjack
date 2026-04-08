@@ -29,12 +29,16 @@ export function buildRoundStateSnapshot({
     shoe,
     hands: hands.map((hand) => ({
       bet: hand.bet,
+      baseBet: hand.baseBet ?? hand.bet,
       sideBets: hand.sb,
       cards: hand.cards,
       result: hand.result ?? null,
+      message: hand.message ?? "",
       payout: hand.payout ?? 0,
       done: hand.done === true,
       doubled: hand.doubled === true,
+      isSplit: hand.isSplit === true,
+      isAceSplit: hand.isAceSplit === true,
       sideBetResults: hand.sideBetResults ?? [],
     })),
     pendingInsurance: pending
@@ -58,6 +62,7 @@ export function canHydrateRoundState(state) {
     Array.isArray(state.allowedActions ?? []) &&
     Array.isArray(state.dealerHand) &&
     Array.isArray(state.hands) &&
+    state.hands.every((hand) => hand && typeof hand === "object" && Array.isArray(hand.cards)) &&
     Array.isArray(state.shoe)
   );
 }

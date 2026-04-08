@@ -106,6 +106,16 @@ function hasLaunchContext(session) {
   );
 }
 
+function hasReplayContext(session) {
+  return Boolean(
+    session.rgsUrl &&
+    session.game &&
+    session.version &&
+    session.mode &&
+    session.event
+  );
+}
+
 export const replayMode = derived(sessionQuery, ($sessionQuery) => {
   return $sessionQuery.replay || $sessionQuery.mode.toLowerCase() === "replay";
 });
@@ -113,8 +123,9 @@ export const replayMode = derived(sessionQuery, ($sessionQuery) => {
 export const launchWarnings = derived(sessionQuery, ($sessionQuery) => {
   if (!hasLaunchContext($sessionQuery)) return [];
   const warnings = [];
-  if (!$sessionQuery.sessionID) warnings.push("Missing sessionID");
+  if (!$sessionQuery.sessionID && !$sessionQuery.replay) warnings.push("Missing sessionID");
   if (!$sessionQuery.rgsUrl) warnings.push("Missing rgs_url");
+  if ($sessionQuery.replay && !hasReplayContext($sessionQuery)) warnings.push("Missing replay params");
   return warnings;
 });
 
