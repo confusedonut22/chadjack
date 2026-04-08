@@ -1,0 +1,21 @@
+{
+  "bundleVersion": 1,
+  "draft": false,
+  "notes": [
+    "Stake-style math export for Degen Blackjack with full split support.",
+    "simulation_number is a sequential integer id for each unique round record.",
+    "round_probability is a normalized probability (frequency / total_rounds) so all weights sum to 1.0.",
+    "payoutMultiplier is a float ratio of total_returned / total_wagered (e.g. 2.0 for a 2:1 payout), not a percentage.",
+    "Supports same-rank split rounds, split aces receive one card each, DAS=False, and no re-splitting.",
+    "Side bets should be disclosed and validated separately from the base-game RTP.",
+    "Compression to .jsonl.zst requires the optional zstandard dependency."
+  ],
+  "modes": [
+    {
+      "name": "base",
+      "cost": 1,
+      "lookupTableFile": "base.csv",
+      "gameLogicFile": "base.jsonl.zst"
+    }
+  ]
+}
