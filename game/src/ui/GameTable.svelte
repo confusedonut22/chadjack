@@ -849,11 +849,11 @@
           <div class="rules-section"><strong>Game Rules</strong>
             <div class="rules-text">
               6-deck shoe, reshuffled when fewer than 52 cards remain.<br/>
-              Dealer stands on all 17s (hard and soft).<br/>
-              Double down available on any initial 2-card hand.<br/>
+              Dealer hits soft 17 and stands on hard 17.<br/>
+              Double down available on hard 9, 10, or 11 only.<br/>
               One card only after doubling. No further hits.<br/>
               Split available when first two cards share the same rank.<br/>
-              Re-splitting is permitted up to 4 total hands.<br/>
+              No re-splitting. No double after split.<br/>
               Split Aces receive one card only and stand automatically.<br/>
               Maximum starting hands: 4 on desktop, 2 on mobile.
             </div>

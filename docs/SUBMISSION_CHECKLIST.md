@@ -29,9 +29,10 @@ It is not a guarantee of approval; it is a practical inventory of what should be
 - [x] Split action present in current frontend source
 - [x] Current frontend test suite green
 - [x] Button legality fully derived from engine/store truth in all paths
+- [x] Replay bootstrap hardened to use the official-style replay route and no-session replay launch
 - [ ] Multi-hand result messaging reviewed for split rounds
-- [ ] Rules/help copy rechecked against actual current implementation
-- [ ] Frontend readiness doc updated to current state
+- [x] Rules/help copy rechecked against actual current implementation
+- [x] Frontend readiness doc updated to current state
 
 ## 4. RTP / disclosure
 - [x] Fast RTP checkpoint helper exists
@@ -52,8 +53,7 @@ It is not a guarantee of approval; it is a practical inventory of what should be
 - [ ] Final work log refreshed at submission time
 
 ## Current biggest open gaps
-1. split-capable final export path
-2. wager accounting regression coverage
-3. multi-hand progression regression coverage
-4. final submission artifact inventory
-5. final docs pass for exact implementation alignment
+1. final external confirmation of blackjack-specific replay expectations
+2. real backend/RGS authority beyond the local mock scaffold
+3. multi-hand result messaging visual review for split rounds
+4. final submission-time work log refresh

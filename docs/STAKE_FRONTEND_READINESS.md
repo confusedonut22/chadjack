@@ -40,7 +40,9 @@ This document tracks the current frontend submission blockers for
   - session timer shown when `displaySessionTimer` is true
   - net position shown when `displayNetPosition` is true
 - If authenticate returns an active round with a hydratable `round.state`, the frontend can now restore that hand locally instead of always blocking resume.
-- Replay bootstrap can now fetch a completed round from the mock RGS and hydrate the replay state locally.
+- Replay bootstrap can now fetch a completed round from the official-style `GET /bet/replay/{game}/{version}/{mode}/{event}` route and hydrate the replay state locally, even without a sessionID.
+- Replay fetch now tolerates both nested `round.state` payloads and top-level official replay `state` payloads.
+- Replay hydration now preserves split-hand metadata needed to keep no-DAS and split-ace restrictions intact after restore.
 - Local launch can now fall back to Vite env defaults for `sessionID` and `rgs_url`, while still allowing Stake-style query params to override them.
 - The static build now uses relative asset paths, which is safer for CDN subpath hosting instead of assuming a domain-root `/assets` path.
 - Button legality for split hands now correctly blocks double-after-split by default
@@ -51,8 +53,8 @@ This document tracks the current frontend submission blockers for
 - Split is now functional with DAS=false (double-after-split blocked by default); multi-hand progression, wager-accounting coverage, and final player-facing messaging still need a stronger submission pass.
 - The mock RGS can now own round creation, actions, replay fetch, and persisted active-round state, but it is still a local scaffold rather than a real Stake-integrated backend.
 - Resume only works when the returned `round.state` matches the current repo-local draft snapshot shape.
-- Replay mode can now hydrate completed mock-RGS rounds, but it is still not a final reviewer-grade replay implementation.
-- The app can hydrate only its own current draft snapshot shape, not a finalized backend contract.
+- Replay mode is materially stronger, but reviewer expectations for blackjack-specific replay edge cases still need final external validation.
+- The app still hydrates a repo-local blackjack snapshot contract rather than a formally Stake-confirmed blackjack contract.
 
 ## open question
 
@@ -67,11 +69,11 @@ This document tracks the current frontend submission blockers for
 
 ## next repo-safe steps
 
-1. Strengthen split-related frontend coverage around wager accounting, active-hand progression, and multi-hand result messaging.
+1. Review multi-hand result messaging visually for split rounds and align any remaining copy with the locked ruleset.
 2. Replace the local mock RGS with a real service boundary that owns wallet/session authority beyond local JSON scaffolding.
 3. Freeze the final backend-owned blackjack round-resume strategy for active rounds returned by authenticate, including the exact `round.state` contract.
 4. Decide how side bets and insurance map into authenticated Stake config and round lifecycle.
-5. Treat replay as a blackjack-specific open question until Stake confirms the required behavior.
+5. Confirm blackjack-specific replay expectations with Stake if reviewer guidance is needed beyond the public docs.
 
 See also:
 
