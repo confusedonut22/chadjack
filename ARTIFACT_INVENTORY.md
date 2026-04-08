@@ -1,7 +1,7 @@
 ## Artifact Inventory
 
 Bundle directory:
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/bundle`
+- `/Users/gerryturnbow/chadjack/bundle`
 
 Files:
 - `base.csv`: lookup table for exported rounds
@@ -11,9 +11,9 @@ Files:
 - `index.json`: bundle manifest
 
 Docs:
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/REVIEW_START_HERE.md`
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/RGS_CLIENT_CHECK.md`
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/docs/APPROVAL_RULESET_LOCK.md`
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/docs/SUBMISSION_CHECKLIST.md`
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/docs/BLACKJACK_RGS_CONTRACT.md`
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/docs/PROJECT_README.md`
+- `/Users/gerryturnbow/chadjack/REVIEW_START_HERE.md`
+- `/Users/gerryturnbow/chadjack/RGS_CLIENT_CHECK.md`
+- `/Users/gerryturnbow/chadjack/docs/APPROVAL_RULESET_LOCK.md`
+- `/Users/gerryturnbow/chadjack/docs/SUBMISSION_CHECKLIST.md`
+- `/Users/gerryturnbow/chadjack/docs/BLACKJACK_RGS_CONTRACT.md`
+- `/Users/gerryturnbow/chadjack/docs/PROJECT_README.md`

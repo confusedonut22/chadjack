@@ -1,17 +1,17 @@
 ## Stake Engine Blackjack Side Bets
 
 Canonical app repo:
-- `/Users/gerryturnbow/submittal/game`
-- `https://github.com/confusedonut22/submittal`
+- `https://github.com/confusedonut22/chadjack`
+- app source: `/Users/gerryturnbow/chadjack/game`
 
 Frozen submission bundle:
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/bundle`
+- `/Users/gerryturnbow/chadjack/bundle`
 
 Key docs:
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/docs/APPROVAL_RULESET_LOCK.md`
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/docs/SUBMISSION_CHECKLIST.md`
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/docs/BLACKJACK_RGS_CONTRACT.md`
-- `/Users/gerryturnbow/stake-engine-blackjack-side-bets/RGS_CLIENT_CHECK.md`
+- `/Users/gerryturnbow/chadjack/docs/APPROVAL_RULESET_LOCK.md`
+- `/Users/gerryturnbow/chadjack/docs/SUBMISSION_CHECKLIST.md`
+- `/Users/gerryturnbow/chadjack/docs/BLACKJACK_RGS_CONTRACT.md`
+- `/Users/gerryturnbow/chadjack/RGS_CLIENT_CHECK.md
 
 Rules locked for submission:
 - 6 decks
